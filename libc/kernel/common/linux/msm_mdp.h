@@ -435,4 +435,3 @@ struct msmfb_mixer_info_req {
 };
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif
-
