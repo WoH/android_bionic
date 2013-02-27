@@ -278,6 +278,11 @@ struct venc_seq_config {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  struct venc_q6_config q6_config;
 };
+struct venc_version {
+ u32 major;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ u32 minor;
+};
 #define VENC_IOCTL_MAGIC 'V'
 #define VENC_IOCTL_CMD_READ_NEXT_MSG   _IOWR(VENC_IOCTL_MAGIC, 1, struct venc_msg)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
@@ -302,4 +307,5 @@ struct venc_seq_config {
 #define VENC_IOCTL_SET_TARGET_BITRATE   _IOW(VENC_IOCTL_MAGIC, 17, int)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define VENC_IOCTL_SET_QP_RANGE   _IOW(VENC_IOCTL_MAGIC, 18, struct venc_qp_range)
+#define VENC_IOCTL_GET_VERSION   _IOR(VENC_IOCTL_MAGIC, 19, struct venc_version)
 #endif
