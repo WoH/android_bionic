@@ -341,4 +341,10 @@ struct kgsl_timestamp_event_genlock {
  int handle;
 };
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define KGSL_TIMESTAMP_EVENT_FENCE 2
+struct kgsl_timestamp_event_fence {
+ int fence_fd;
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define IOCTL_KGSL_TIMESTAMP_EVENT   _IOWR(KGSL_IOC_TYPE, 0x33, struct kgsl_timestamp_event)
 #endif
