@@ -16,335 +16,570 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _MSM_KGSL_H
-#define _MSM_KGSL_H
-#define KGSL_VERSION_MAJOR 3
-#define KGSL_VERSION_MINOR 8
+#ifndef _MSM_MDP_H_
+#define _MSM_MDP_H_
+#include <linux/types.h>
+#include <linux/fb.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define KGSL_CONTEXT_SAVE_GMEM 1
-#define KGSL_CONTEXT_NO_GMEM_ALLOC 2
-#define KGSL_CONTEXT_SUBMIT_IB_LIST 4
-#define KGSL_CONTEXT_CTX_SWITCH 8
+#define MSMFB_IOCTL_MAGIC 'm'
+#define MSMFB_GRP_DISP _IOW(MSMFB_IOCTL_MAGIC, 1, unsigned int)
+#define MSMFB_BLIT _IOW(MSMFB_IOCTL_MAGIC, 2, unsigned int)
+#define MSMFB_SUSPEND_SW_REFRESHER _IOW(MSMFB_IOCTL_MAGIC, 128, unsigned int)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define KGSL_CONTEXT_PREAMBLE 16
-#define KGSL_MEMFLAGS_GPUREADONLY 0x01000000
-#define KGSL_FLAGS_NORMALMODE 0x00000000
-#define KGSL_FLAGS_SAFEMODE 0x00000001
+#define MSMFB_RESUME_SW_REFRESHER _IOW(MSMFB_IOCTL_MAGIC, 129, unsigned int)
+#define MSMFB_CURSOR _IOW(MSMFB_IOCTL_MAGIC, 130, struct fb_cursor)
+#define MSMFB_SET_LUT _IOW(MSMFB_IOCTL_MAGIC, 131, struct fb_cmap)
+#define MSMFB_HISTOGRAM _IOWR(MSMFB_IOCTL_MAGIC, 132, struct mdp_histogram_data)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define KGSL_FLAGS_INITIALIZED0 0x00000002
-#define KGSL_FLAGS_INITIALIZED 0x00000004
-#define KGSL_FLAGS_STARTED 0x00000008
-#define KGSL_FLAGS_ACTIVE 0x00000010
+#define MSMFB_GET_CCS_MATRIX _IOWR(MSMFB_IOCTL_MAGIC, 133, struct mdp_ccs)
+#define MSMFB_SET_CCS_MATRIX _IOW(MSMFB_IOCTL_MAGIC, 134, struct mdp_ccs)
+#define MSMFB_OVERLAY_SET _IOWR(MSMFB_IOCTL_MAGIC, 135,   struct mdp_overlay)
+#define MSMFB_OVERLAY_UNSET _IOW(MSMFB_IOCTL_MAGIC, 136, unsigned int)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define KGSL_FLAGS_RESERVED0 0x00000020
-#define KGSL_FLAGS_RESERVED1 0x00000040
-#define KGSL_FLAGS_RESERVED2 0x00000080
-#define KGSL_FLAGS_SOFT_RESET 0x00000100
+#define MSMFB_OVERLAY_PLAY _IOW(MSMFB_IOCTL_MAGIC, 137,   struct msmfb_overlay_data)
+#define MSMFB_OVERLAY_QUEUE MSMFB_OVERLAY_PLAY
+#define MSMFB_GET_PAGE_PROTECTION _IOR(MSMFB_IOCTL_MAGIC, 138,   struct mdp_page_protection)
+#define MSMFB_SET_PAGE_PROTECTION _IOW(MSMFB_IOCTL_MAGIC, 139,   struct mdp_page_protection)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define KGSL_CLK_SRC 0x00000001
-#define KGSL_CLK_CORE 0x00000002
-#define KGSL_CLK_IFACE 0x00000004
-#define KGSL_CLK_MEM 0x00000008
+#define MSMFB_OVERLAY_GET _IOR(MSMFB_IOCTL_MAGIC, 140,   struct mdp_overlay)
+#define MSMFB_OVERLAY_PLAY_ENABLE _IOW(MSMFB_IOCTL_MAGIC, 141, unsigned int)
+#define MSMFB_OVERLAY_BLT _IOWR(MSMFB_IOCTL_MAGIC, 142,   struct msmfb_overlay_blt)
+#define MSMFB_OVERLAY_BLT_OFFSET _IOW(MSMFB_IOCTL_MAGIC, 143, unsigned int)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define KGSL_CLK_MEM_IFACE 0x00000010
-#define KGSL_CLK_AXI 0x00000020
-#define KGSL_CLK_GRP 0x00001000
-#define KGSL_CLK_IMEM 0x00010000
+#define MSMFB_HISTOGRAM_START _IOR(MSMFB_IOCTL_MAGIC, 144,   struct mdp_histogram_start_req)
+#define MSMFB_HISTOGRAM_STOP _IOR(MSMFB_IOCTL_MAGIC, 145, unsigned int)
+#define MSMFB_NOTIFY_UPDATE _IOW(MSMFB_IOCTL_MAGIC, 146, unsigned int)
+#define MSMFB_OVERLAY_3D _IOWR(MSMFB_IOCTL_MAGIC, 147,   struct msmfb_overlay_3d)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-enum kgsl_ctx_reset_stat {
- KGSL_CTX_STAT_NO_ERROR = 0x00000000,
- KGSL_CTX_STAT_GUILTY_CONTEXT_RESET_EXT = 0x00000001,
- KGSL_CTX_STAT_INNOCENT_CONTEXT_RESET_EXT = 0x00000002,
+#define MSMFB_MIXER_INFO _IOWR(MSMFB_IOCTL_MAGIC, 148,   struct msmfb_mixer_info_req)
+#define MSMFB_OVERLAY_PLAY_WAIT _IOWR(MSMFB_IOCTL_MAGIC, 149,   struct msmfb_overlay_data)
+#define MSMFB_WRITEBACK_INIT _IO(MSMFB_IOCTL_MAGIC, 150)
+#define MSMFB_WRITEBACK_START _IO(MSMFB_IOCTL_MAGIC, 151)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- KGSL_CTX_STAT_UNKNOWN_CONTEXT_RESET_EXT = 0x00000003
+#define MSMFB_WRITEBACK_STOP _IO(MSMFB_IOCTL_MAGIC, 152)
+#define MSMFB_WRITEBACK_QUEUE_BUFFER _IOW(MSMFB_IOCTL_MAGIC, 153,   struct msmfb_data)
+#define MSMFB_WRITEBACK_DEQUEUE_BUFFER _IOW(MSMFB_IOCTL_MAGIC, 154,   struct msmfb_data)
+#define MSMFB_WRITEBACK_TERMINATE _IO(MSMFB_IOCTL_MAGIC, 155)
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define MSMFB_MDP_PP _IOWR(MSMFB_IOCTL_MAGIC, 156, struct msmfb_mdp_pp)
+#define MSMFB_OVERLAY_VSYNC_CTRL _IOW(MSMFB_IOCTL_MAGIC, 160, unsigned int)
+#define MSMFB_VSYNC_CTRL _IOW(MSMFB_IOCTL_MAGIC, 161, unsigned int)
+#define MSMFB_BUFFER_SYNC _IOW(MSMFB_IOCTL_MAGIC, 165, struct mdp_buf_sync)
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define MSMFB_METADATA_SET _IOW(MSMFB_IOCTL_MAGIC, 166, struct msmfb_metadata)
+#define MSMFB_DISPLAY_COMMIT _IOW(MSMFB_IOCTL_MAGIC, 164,   struct mdp_display_commit)
+#define MSMFB_OVERLAY_COMMIT _IO(MSMFB_IOCTL_MAGIC, 163)
+#define FB_TYPE_3D_PANEL 0x10101010
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define MDP_IMGTYPE2_START 0x10000
+#define MSMFB_DRIVER_VERSION 0xF9E8D701
+enum {
+ NOTIFY_UPDATE_START,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ NOTIFY_UPDATE_STOP,
 };
-#define KGSL_MAX_PWRLEVELS 5
-#define KGSL_CONVERT_TO_MBPS(val)   (val*1000*1000U)
+enum {
+ MDP_RGB_565,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-enum kgsl_deviceid {
- KGSL_DEVICE_3D0 = 0x00000000,
- KGSL_DEVICE_2D0 = 0x00000001,
- KGSL_DEVICE_2D1 = 0x00000002,
+ MDP_XRGB_8888,
+ MDP_Y_CBCR_H2V2,
+ MDP_Y_CBCR_H2V2_ADRENO,
+ MDP_ARGB_8888,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- KGSL_DEVICE_MAX = 0x00000003
+ MDP_RGB_888,
+ MDP_Y_CRCB_H2V2,
+ MDP_YCRYCB_H2V1,
+ MDP_Y_CRCB_H2V1,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MDP_Y_CBCR_H2V1,
+ MDP_RGBA_8888,
+ MDP_BGRA_8888,
+ MDP_RGBX_8888,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MDP_Y_CRCB_H2V2_TILE,
+ MDP_Y_CBCR_H2V2_TILE,
+ MDP_Y_CR_CB_H2V2,
+ MDP_Y_CR_CB_GH2V2,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MDP_Y_CB_CR_H2V2,
+ MDP_Y_CRCB_H1V1,
+ MDP_Y_CBCR_H1V1,
+ MDP_YCRCB_H1V1,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MDP_YCBCR_H1V1,
+ MDP_IMGTYPE_LIMIT,
+ MDP_RGB_BORDERFILL,
+ MDP_BGR_565 = MDP_IMGTYPE2_START,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MDP_FB_FORMAT,
+ MDP_IMGTYPE_LIMIT2
 };
-enum kgsl_user_mem_type {
- KGSL_USER_MEM_TYPE_PMEM = 0x00000000,
+enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- KGSL_USER_MEM_TYPE_ASHMEM = 0x00000001,
- KGSL_USER_MEM_TYPE_ADDR = 0x00000002,
- KGSL_USER_MEM_TYPE_ION = 0x00000003,
- KGSL_USER_MEM_TYPE_MAX = 0x00000004,
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ PMEM_IMG,
+ FB_IMG,
 };
-struct kgsl_devinfo {
- unsigned int device_id;
- unsigned int chip_id;
+enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int mmu_enabled;
- unsigned int gmem_gpubaseaddr;
- unsigned int gpu_id;
- unsigned int gmem_sizebytes;
+ HSIC_HUE = 0,
+ HSIC_SAT,
+ HSIC_INT,
+ HSIC_CON,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ NUM_HSIC_PARAM,
 };
-struct kgsl_devmemstore {
- volatile unsigned int soptimestamp;
- unsigned int sbz;
+#define MDP_ROT_NOP 0
+#define MDP_FLIP_LR 0x1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- volatile unsigned int eoptimestamp;
- unsigned int sbz2;
- volatile unsigned int ts_cmp_enable;
- unsigned int sbz3;
+#define MDP_FLIP_UD 0x2
+#define MDP_ROT_90 0x4
+#define MDP_ROT_180 (MDP_FLIP_UD|MDP_FLIP_LR)
+#define MDP_ROT_270 (MDP_ROT_90|MDP_FLIP_UD|MDP_FLIP_LR)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- volatile unsigned int ref_wait_ts;
- unsigned int sbz4;
- unsigned int current_context;
- unsigned int sbz5;
+#define MDP_DITHER 0x8
+#define MDP_BLUR 0x10
+#define MDP_BLEND_FG_PREMULT 0x20000
+#define MDP_DEINTERLACE 0x80000000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-};
-#define KGSL_DEVICE_MEMSTORE_OFFSET(field)   offsetof(struct kgsl_devmemstore, field)
-enum kgsl_timestamp_type {
- KGSL_TIMESTAMP_CONSUMED = 0x00000001,
+#define MDP_SHARPENING 0x40000000
+#define MDP_NO_DMA_BARRIER_START 0x20000000
+#define MDP_NO_DMA_BARRIER_END 0x10000000
+#define MDP_NO_BLIT 0x08000000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- KGSL_TIMESTAMP_RETIRED = 0x00000002,
- KGSL_TIMESTAMP_MAX = 0x00000002,
-};
-enum kgsl_property_type {
+#define MDP_BLIT_WITH_DMA_BARRIERS 0x000
+#define MDP_BLIT_WITH_NO_DMA_BARRIERS   (MDP_NO_DMA_BARRIER_START | MDP_NO_DMA_BARRIER_END)
+#define MDP_BLIT_SRC_GEM 0x04000000
+#define MDP_BLIT_DST_GEM 0x02000000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- KGSL_PROP_DEVICE_INFO = 0x00000001,
- KGSL_PROP_DEVICE_SHADOW = 0x00000002,
- KGSL_PROP_DEVICE_POWER = 0x00000003,
- KGSL_PROP_SHMEM = 0x00000004,
+#define MDP_BLIT_NON_CACHED 0x01000000
+#define MDP_OV_PIPE_SHARE 0x00800000
+#define MDP_DEINTERLACE_ODD 0x00400000
+#define MDP_OV_PLAY_NOWAIT 0x00200000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- KGSL_PROP_SHMEM_APERTURES = 0x00000005,
- KGSL_PROP_MMU_ENABLE = 0x00000006,
- KGSL_PROP_INTERRUPT_WAITS = 0x00000007,
- KGSL_PROP_VERSION = 0x00000008,
+#define MDP_SOURCE_ROTATED_90 0x00100000
+#define MDP_OVERLAY_PP_CFG_EN 0x00080000
+#define MDP_BACKEND_COMPOSITION 0x00040000
+#define MDP_BORDERFILL_SUPPORTED 0x00010000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- KGSL_PROP_GPU_RESET_STAT = 0x00000009
-};
-struct kgsl_shadowprop {
- unsigned int gpuaddr;
+#define MDP_SECURE_OVERLAY_SESSION 0x00008000
+#define MDP_MEMORY_ID_TYPE_FB 0x00001000
+#define MDP_TRANSP_NOP 0xffffffff
+#define MDP_ALPHA_NOP 0xff
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int size;
- unsigned int flags;
-};
-struct kgsl_pwrlevel {
+#define MDP_FB_PAGE_PROTECTION_NONCACHED (0)
+#define MDP_FB_PAGE_PROTECTION_WRITECOMBINE (1)
+#define MDP_FB_PAGE_PROTECTION_WRITETHROUGHCACHE (2)
+#define MDP_FB_PAGE_PROTECTION_WRITEBACKCACHE (3)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int gpu_freq;
- unsigned int bus_freq;
- unsigned int io_fraction;
-};
+#define MDP_FB_PAGE_PROTECTION_WRITEBACKWACACHE (4)
+#define MDP_FB_PAGE_PROTECTION_INVALID (5)
+#define MDP_NUM_FB_PAGE_PROTECTION_VALUES (5)
+#define MDSS_MDP_ROT_ONLY 0x80
+struct mdp_rect {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-struct kgsl_version {
- unsigned int drv_major;
- unsigned int drv_minor;
- unsigned int dev_major;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int dev_minor;
-};
-struct kgsl_ibdesc {
- unsigned int gpuaddr;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- void *hostptr;
- unsigned int sizedwords;
- unsigned int ctrl;
-};
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define KGSL_IOC_TYPE 0x09
-struct kgsl_device_getproperty {
- unsigned int type;
- void *value;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int sizebytes;
-};
-#define IOCTL_KGSL_DEVICE_GETPROPERTY   _IOWR(KGSL_IOC_TYPE, 0x2, struct kgsl_device_getproperty)
-struct kgsl_device_regread {
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int offsetwords;
- unsigned int value;
-};
-#define IOCTL_KGSL_DEVICE_REGREAD   _IOWR(KGSL_IOC_TYPE, 0x3, struct kgsl_device_regread)
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-struct kgsl_device_waittimestamp {
- unsigned int timestamp;
- unsigned int timeout;
-};
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define IOCTL_KGSL_DEVICE_WAITTIMESTAMP   _IOW(KGSL_IOC_TYPE, 0x6, struct kgsl_device_waittimestamp)
-struct kgsl_ringbuffer_issueibcmds {
- unsigned int drawctxt_id;
- unsigned int ibdesc_addr;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int numibs;
- unsigned int timestamp;
- unsigned int flags;
-};
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define IOCTL_KGSL_RINGBUFFER_ISSUEIBCMDS   _IOWR(KGSL_IOC_TYPE, 0x10, struct kgsl_ringbuffer_issueibcmds)
-struct kgsl_cmdstream_readtimestamp {
- unsigned int type;
- unsigned int timestamp;
+ uint32_t x;
+ uint32_t y;
+ uint32_t w;
+ uint32_t h;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 };
-#define IOCTL_KGSL_CMDSTREAM_READTIMESTAMP_OLD   _IOR(KGSL_IOC_TYPE, 0x11, struct kgsl_cmdstream_readtimestamp)
-#define IOCTL_KGSL_CMDSTREAM_READTIMESTAMP   _IOWR(KGSL_IOC_TYPE, 0x11, struct kgsl_cmdstream_readtimestamp)
-struct kgsl_cmdstream_freememontimestamp {
+struct mdp_img {
+ uint32_t width;
+ uint32_t height;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int gpuaddr;
- unsigned int type;
- unsigned int timestamp;
-};
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define IOCTL_KGSL_CMDSTREAM_FREEMEMONTIMESTAMP   _IOW(KGSL_IOC_TYPE, 0x12, struct kgsl_cmdstream_freememontimestamp)
-#define IOCTL_KGSL_CMDSTREAM_FREEMEMONTIMESTAMP_OLD   _IOR(KGSL_IOC_TYPE, 0x12, struct kgsl_cmdstream_freememontimestamp)
-struct kgsl_drawctxt_create {
- unsigned int flags;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int drawctxt_id;
-};
-#define IOCTL_KGSL_DRAWCTXT_CREATE   _IOWR(KGSL_IOC_TYPE, 0x13, struct kgsl_drawctxt_create)
-struct kgsl_drawctxt_destroy {
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int drawctxt_id;
-};
-#define IOCTL_KGSL_DRAWCTXT_DESTROY   _IOW(KGSL_IOC_TYPE, 0x14, struct kgsl_drawctxt_destroy)
-struct kgsl_map_user_mem {
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- int fd;
- unsigned int gpuaddr;
- unsigned int len;
- unsigned int offset;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int hostptr;
- enum kgsl_user_mem_type memtype;
- unsigned int reserved;
-};
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define IOCTL_KGSL_MAP_USER_MEM   _IOWR(KGSL_IOC_TYPE, 0x15, struct kgsl_map_user_mem)
-struct kgsl_sharedmem_from_pmem {
- int pmem_fd;
- unsigned int gpuaddr;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int len;
- unsigned int offset;
-};
-#define IOCTL_KGSL_SHAREDMEM_FROM_PMEM   _IOWR(KGSL_IOC_TYPE, 0x20, struct kgsl_sharedmem_from_pmem)
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-struct kgsl_sharedmem_free {
- unsigned int gpuaddr;
-};
-#define IOCTL_KGSL_SHAREDMEM_FREE   _IOW(KGSL_IOC_TYPE, 0x21, struct kgsl_sharedmem_free)
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-struct kgsl_cff_user_event {
- unsigned char cff_opcode;
- unsigned int op1;
- unsigned int op2;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int op3;
- unsigned int op4;
- unsigned int op5;
- unsigned int __pad[2];
+ uint32_t format;
+ uint32_t offset;
+ int memory_id;
+ uint32_t priv;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 };
-#define IOCTL_KGSL_CFF_USER_EVENT   _IOW(KGSL_IOC_TYPE, 0x31, struct kgsl_cff_user_event)
-struct kgsl_gmem_desc {
- unsigned int x;
+#define MDP_CCS_RGB2YUV 0
+#define MDP_CCS_YUV2RGB 1
+#define MDP_CCS_SIZE 9
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int y;
- unsigned int width;
- unsigned int height;
- unsigned int pitch;
+#define MDP_BV_SIZE 3
+struct mdp_ccs {
+ int direction;
+ uint16_t ccs[MDP_CCS_SIZE];
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint16_t bv[MDP_BV_SIZE];
+};
+struct mdp_csc {
+ int id;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t csc_mv[9];
+ uint32_t csc_pre_bv[3];
+ uint32_t csc_post_bv[3];
+ uint32_t csc_pre_lv[6];
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t csc_post_lv[6];
+};
+#define MDP_BLIT_REQ_VERSION 2
+struct mdp_blit_req {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct mdp_img src;
+ struct mdp_img dst;
+ struct mdp_rect src_rect;
+ struct mdp_rect dst_rect;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t alpha;
+ uint32_t transp_mask;
+ uint32_t flags;
+ int sharpening_strength;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 };
-struct kgsl_buffer_desc {
- void *hostptr;
- unsigned int gpuaddr;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- int size;
- unsigned int format;
- unsigned int pitch;
- unsigned int enabled;
+struct mdp_blit_req_list {
+ uint32_t count;
+ struct mdp_blit_req req[];
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 };
-struct kgsl_bind_gmem_shadow {
- unsigned int drawctxt_id;
- struct kgsl_gmem_desc gmem_desc;
+#define MSMFB_DATA_VERSION 2
+struct msmfb_data {
+ uint32_t offset;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int shadow_x;
- unsigned int shadow_y;
- struct kgsl_buffer_desc shadow_buffer;
- unsigned int buffer_id;
+ int memory_id;
+ int id;
+ uint32_t flags;
+ uint32_t priv;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t iova;
 };
-#define IOCTL_KGSL_DRAWCTXT_BIND_GMEM_SHADOW   _IOW(KGSL_IOC_TYPE, 0x22, struct kgsl_bind_gmem_shadow)
-struct kgsl_sharedmem_from_vmalloc {
- unsigned int gpuaddr;
+#define MSMFB_NEW_REQUEST -1
+struct msmfb_overlay_data {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int hostptr;
- unsigned int flags;
+ uint32_t id;
+ struct msmfb_data data;
+ uint32_t version_key;
+ struct msmfb_data plane1_data;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct msmfb_data plane2_data;
+ struct msmfb_data dst_data;
 };
-#define IOCTL_KGSL_SHAREDMEM_FROM_VMALLOC   _IOWR(KGSL_IOC_TYPE, 0x23, struct kgsl_sharedmem_from_vmalloc)
+struct msmfb_img {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define IOCTL_KGSL_SHAREDMEM_FLUSH_CACHE   _IOW(KGSL_IOC_TYPE, 0x24, struct kgsl_sharedmem_free)
-struct kgsl_drawctxt_set_bin_base_offset {
- unsigned int drawctxt_id;
- unsigned int offset;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-};
-#define IOCTL_KGSL_DRAWCTXT_SET_BIN_BASE_OFFSET   _IOW(KGSL_IOC_TYPE, 0x25, struct kgsl_drawctxt_set_bin_base_offset)
-enum kgsl_cmdwindow_type {
- KGSL_CMDWINDOW_MIN = 0x00000000,
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- KGSL_CMDWINDOW_2D = 0x00000000,
- KGSL_CMDWINDOW_3D = 0x00000001,
- KGSL_CMDWINDOW_MMU = 0x00000002,
- KGSL_CMDWINDOW_ARBITER = 0x000000FF,
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- KGSL_CMDWINDOW_MAX = 0x000000FF,
-};
-struct kgsl_cmdwindow_write {
- enum kgsl_cmdwindow_type target;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int addr;
- unsigned int data;
-};
-#define IOCTL_KGSL_CMDWINDOW_WRITE   _IOW(KGSL_IOC_TYPE, 0x2e, struct kgsl_cmdwindow_write)
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-struct kgsl_gpumem_alloc {
- unsigned long gpuaddr;
- size_t size;
- unsigned int flags;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-};
-#define IOCTL_KGSL_GPUMEM_ALLOC   _IOWR(KGSL_IOC_TYPE, 0x2f, struct kgsl_gpumem_alloc)
-struct kgsl_cff_syncmem {
- unsigned int gpuaddr;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- unsigned int len;
- unsigned int __pad[2];
-};
-#define IOCTL_KGSL_CFF_SYNCMEM   _IOW(KGSL_IOC_TYPE, 0x30, struct kgsl_cff_syncmem)
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-struct kgsl_timestamp_event {
- int type;
- unsigned int timestamp;
- unsigned int context_id;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- void *priv;
- size_t len;
-};
-#define IOCTL_KGSL_TIMESTAMP_EVENT_OLD   _IOW(KGSL_IOC_TYPE, 0x31, struct kgsl_timestamp_event)
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define KGSL_TIMESTAMP_EVENT_GENLOCK 1
-struct kgsl_timestamp_event_genlock {
- int handle;
+ uint32_t width;
+ uint32_t height;
+ uint32_t format;
 };
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define KGSL_TIMESTAMP_EVENT_FENCE 2
-struct kgsl_timestamp_event_fence {
- int fence_fd;
+#define MSMFB_WRITEBACK_DEQUEUE_BLOCKING 0x1
+struct msmfb_writeback_data {
+ struct msmfb_data buf_info;
+ struct msmfb_img img;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+#define MDP_PP_OPS_ENABLE 0x1
+#define MDP_PP_OPS_READ 0x2
+#define MDP_PP_OPS_WRITE 0x4
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define MDP_PP_OPS_DISABLE 0x8
+struct mdp_qseed_cfg {
+ uint32_t table_num;
+ uint32_t ops;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t len;
+ uint32_t *data;
+};
+struct mdp_qseed_cfg_data {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t block;
+ struct mdp_qseed_cfg qseed_data;
+};
+struct mdp_sharp_cfg {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t flags;
+ uint32_t strength;
+ uint32_t edge_thr;
+ uint32_t smooth_thr;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t noise_thr;
+};
+#define MDP_OVERLAY_PP_CSC_CFG 0x1
+#define MDP_OVERLAY_PP_QSEED_CFG 0x2
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define MDP_OVERLAY_PP_PA_CFG 0x4
+#define MDP_OVERLAY_PP_IGC_CFG 0x8
+#define MDP_OVERLAY_PP_SHARP_CFG 0x10
+#define MDP_CSC_FLAG_ENABLE 0x1
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#define MDP_CSC_FLAG_YUV_IN 0x2
+#define MDP_CSC_FLAG_YUV_OUT 0x4
+struct mdp_csc_cfg {
+ uint32_t flags;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t csc_mv[9];
+ uint32_t csc_pre_bv[3];
+ uint32_t csc_post_bv[3];
+ uint32_t csc_pre_lv[6];
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t csc_post_lv[6];
+};
+struct mdp_csc_cfg_data {
+ uint32_t block;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct mdp_csc_cfg csc_data;
+};
+struct mdp_pa_cfg {
+ uint32_t flags;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t hue_adj;
+ uint32_t sat_adj;
+ uint32_t val_adj;
+ uint32_t cont_adj;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+struct mdp_igc_lut_data {
+ uint32_t block;
+ uint32_t len, ops;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t *c0_c1_data;
+ uint32_t *c2_data;
+};
+struct mdp_overlay_pp_params {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t config_ops;
+ struct mdp_csc_cfg csc_cfg;
+ struct mdp_qseed_cfg qseed_cfg[2];
+ struct mdp_pa_cfg pa_cfg;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct mdp_igc_lut_data igc_cfg;
+ struct mdp_sharp_cfg sharp_cfg;
+};
+struct mdp_overlay {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct msmfb_img src;
+ struct mdp_rect src_rect;
+ struct mdp_rect dst_rect;
+ uint32_t z_order;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t is_fg;
+ uint32_t alpha;
+ uint32_t transp_mask;
+ uint32_t flags;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t id;
+ uint32_t user_data[8];
+ struct mdp_overlay_pp_params overlay_pp_cfg;
 };
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define IOCTL_KGSL_TIMESTAMP_EVENT   _IOWR(KGSL_IOC_TYPE, 0x33, struct kgsl_timestamp_event)
+struct msmfb_overlay_3d {
+ uint32_t is_3d;
+ uint32_t width;
+ uint32_t height;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+struct msmfb_overlay_blt {
+ uint32_t enable;
+ uint32_t offset;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t width;
+ uint32_t height;
+ uint32_t bpp;
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+struct mdp_histogram {
+ uint32_t frame_cnt;
+ uint32_t bin_cnt;
+ uint32_t *r;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t *g;
+ uint32_t *b;
+};
+enum {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MDP_BLOCK_RESERVED = 0,
+ MDP_BLOCK_OVERLAY_0,
+ MDP_BLOCK_OVERLAY_1,
+ MDP_BLOCK_VG_1,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MDP_BLOCK_VG_2,
+ MDP_BLOCK_RGB_1,
+ MDP_BLOCK_RGB_2,
+ MDP_BLOCK_DMA_P,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MDP_BLOCK_DMA_S,
+ MDP_BLOCK_DMA_E,
+ MDP_BLOCK_OVERLAY_2,
+ MDP_LOGICAL_BLOCK_DISP_0 = 0x1000,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ MDP_LOGICAL_BLOCK_DISP_1,
+ MDP_LOGICAL_BLOCK_DISP_2,
+ MDP_BLOCK_MAX,
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+struct mdp_histogram_start_req {
+ uint32_t block;
+ uint8_t frame_cnt;
+ uint8_t bit_mask;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint8_t num_bins;
+};
+struct mdp_histogram_data {
+ uint32_t block;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint8_t bin_cnt;
+ uint32_t *c0;
+ uint32_t *c1;
+ uint32_t *c2;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t *extra_info;
+};
+struct mdp_pcc_coeff {
+ uint32_t c, r, g, b, rr, gg, bb, rg, gb, rb, rgb_0, rgb_1;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+struct mdp_pcc_cfg_data {
+ uint32_t block;
+ uint32_t ops;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct mdp_pcc_coeff r, g, b;
+};
+enum {
+ mdp_lut_igc,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ mdp_lut_pgc,
+ mdp_lut_hist,
+ mdp_lut_max,
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+struct mdp_ar_gc_lut_data {
+ uint32_t x_start;
+ uint32_t slope;
+ uint32_t offset;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+struct mdp_pgc_lut_data {
+ uint32_t block;
+ uint32_t flags;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint8_t num_r_stages;
+ uint8_t num_g_stages;
+ uint8_t num_b_stages;
+ struct mdp_ar_gc_lut_data *r_data;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct mdp_ar_gc_lut_data *g_data;
+ struct mdp_ar_gc_lut_data *b_data;
+};
+struct mdp_hist_lut_data {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t block;
+ uint32_t ops;
+ uint32_t len;
+ uint32_t *data;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+struct mdp_lut_cfg_data {
+ uint32_t lut_type;
+ union {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct mdp_igc_lut_data igc_lut_data;
+ struct mdp_pgc_lut_data pgc_lut_data;
+ struct mdp_hist_lut_data hist_lut_data;
+ } data;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+struct mdp_bl_scale_data {
+ uint32_t min_lvl;
+ uint32_t scale;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+struct mdp_pa_cfg_data {
+ uint32_t block;
+ struct mdp_pa_cfg pa_data;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+enum {
+ mdp_op_pcc_cfg,
+ mdp_op_csc_cfg,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ mdp_op_lut_cfg,
+ mdp_bl_scale_cfg,
+ mdp_op_qseed_cfg,
+ mdp_op_pa_cfg,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ mdp_op_max,
+};
+struct msmfb_mdp_pp {
+ uint32_t op;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ union {
+ struct mdp_pcc_cfg_data pcc_cfg_data;
+ struct mdp_csc_cfg_data csc_cfg_data;
+ struct mdp_lut_cfg_data lut_cfg_data;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ struct mdp_bl_scale_data bl_scale_data;
+ struct mdp_qseed_cfg_data qseed_cfg_data;
+ struct mdp_pa_cfg_data pa_cfg_data;
+ } data;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+enum {
+ metadata_op_none,
+ metadata_op_base_blend,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ metadata_op_max
+};
+#define MDP_MAX_FENCE_FD 10
+#define MDP_BUF_SYNC_FLAG_WAIT 1
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+struct mdp_buf_sync {
+ uint32_t flags;
+ uint32_t acq_fen_fd_cnt;
+ int *acq_fen_fd;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ int *rel_fen_fd;
+};
+struct mdp_blend_cfg {
+ uint32_t is_premultiplied;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+struct msmfb_metadata {
+ uint32_t op;
+ uint32_t flags;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ union {
+ struct mdp_blend_cfg blend_cfg;
+ } data;
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+struct mdp_buf_fence {
+ uint32_t flags;
+ uint32_t acq_fen_fd_cnt;
+ int acq_fen_fd[MDP_MAX_FENCE_FD];
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ int rel_fen_fd[MDP_MAX_FENCE_FD];
+};
+#define MDP_DISPLAY_COMMIT_OVERLAY 0x00000001
+struct mdp_display_commit {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ uint32_t flags;
+ uint32_t wait_for_finish;
+ struct fb_var_screeninfo var;
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+struct mdp_page_protection {
+ uint32_t page_protection;
+};
+struct mdp_mixer_info {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ int pndx;
+ int pnum;
+ int ptype;
+ int mixer_num;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ int z_order;
+};
+#define MAX_PIPE_PER_MIXER 4
+struct msmfb_mixer_info_req {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ int mixer_num;
+ int cnt;
+ struct mdp_mixer_info info[MAX_PIPE_PER_MIXER];
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+enum {
+ DISPLAY_SUBSYSTEM_ID,
+ ROTATOR_SUBSYSTEM_ID,
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

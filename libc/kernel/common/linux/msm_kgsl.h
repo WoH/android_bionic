@@ -334,7 +334,7 @@ struct kgsl_timestamp_event {
  void *priv;
  size_t len;
 };
-#define IOCTL_KGSL_TIMESTAMP_EVENT   _IOW(KGSL_IOC_TYPE, 0x31, struct kgsl_timestamp_event)
+#define IOCTL_KGSL_TIMESTAMP_EVENT_OLD   _IOW(KGSL_IOC_TYPE, 0x31, struct kgsl_timestamp_event)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define KGSL_TIMESTAMP_EVENT_GENLOCK 1
 struct kgsl_timestamp_event_genlock {
