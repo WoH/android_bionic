@@ -25,31 +25,57 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-#ifndef _RESOLV_H_
-#define _RESOLV_H_
 
-#include <sys/param.h>
-#include <sys/types.h>
-#include <sys/cdefs.h>
-#include <sys/socket.h>
-#include <stdio.h>
-#include <arpa/nameser.h>
-#include <netinet/in.h>
+#include <machine/cpu-features.h>
+#include <machine/asm.h>
 
-__BEGIN_DECLS
+/*
+ * This code assumes it is running on a processor that supports all arm v7
+ * instructions, that supports neon instructions, and that supports
+ * unaligned neon instruction accesses to memory.
+ */
 
-struct res_state;
+    .fpu    neon
 
-extern struct __res_state *__res_state(void) __attribute__((const));
-#define _res (*__res_state())
+ENTRY(bzero)
+        mov     r2, r1
+        mov     r1, #0
+END(bzero)
 
-/* Base-64 functions - because some code expects it there */
+/* memset() returns its first argument.  */
+ENTRY(memset)
+        .save       {r0}
+        stmfd       sp!, {r0}
 
-#define b64_ntop        __b64_ntop
-#define b64_pton        __b64_pton
-extern int   b64_ntop(u_char const *, size_t, char *, size_t);
-extern int   b64_pton(char const *, u_char *, size_t);
+        vdup.8      q0, r1
 
-__END_DECLS
+        /* make sure we have at least 32 bytes to write */
+        subs        r2, r2, #32
+        blo         2f
+        vmov        q1, q0
 
-#endif /* _RESOLV_H_ */
+1:      /* The main loop writes 32 bytes at a time */
+        subs        r2, r2, #32
+        vst1.8      {d0 - d3}, [r0]!
+        bhs         1b
+
+2:      /* less than 32 left */
+        add         r2, r2, #32
+        tst         r2, #0x10
+        beq         3f
+
+        // writes 16 bytes, 128-bits aligned
+        vst1.8      {d0, d1}, [r0]!
+3:      /* write up to 15-bytes (count in r2) */
+        movs        ip, r2, lsl #29
+        bcc         1f
+        vst1.8      {d0}, [r0]!
+1:      bge         2f
+        vst1.32     {d0[0]}, [r0]!
+2:      movs        ip, r2, lsl #31
+        strmib      r1, [r0], #1
+        strcsb      r1, [r0], #1
+        strcsb      r1, [r0], #1
+        ldmfd       sp!, {r0}
+        bx          lr
+END(memset)
